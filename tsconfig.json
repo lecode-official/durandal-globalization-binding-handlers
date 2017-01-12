@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "declaration": true,
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "./src"
+  }
+}

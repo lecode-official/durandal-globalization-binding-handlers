@@ -1,0 +1,37 @@
+{
+  "name": "typescript-globalization-binding-handlers",
+  "displayName": "TypeScript Globalization Binding Handlers",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Knockout binding handlers for date and numerical objects of the globalization library written in TypeScript. It supports binding dates and numerics to text inputs based on different cultures.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lecode-official/typescript-globalization-binding-handlers.git"
+  },
+  "keywords": [
+    "Globalization",
+    "DateTime",
+    "Knockout",
+    "Binding",
+    "Numeric",
+    "BindingHandler",
+    "Culture",
+    "Language",
+    "TypeScript"
+  ],
+  "author": "David Neumann & Lukas Rögner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lecode-official/typescript-globalization-binding-handlers/issues"
+  },
+  "homepage": "https://github.com/lecode-official/typescript-globalization-binding-handlers#readme",
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "gulp": "^3.9.1",
+    "gulp-bower": "0.0.13",
+    "gulp-clean": "^0.3.2",
+    "gulp-typescript": "^3.0.1",
+    "run-sequence": "1.2.2",
+    "typescript": "^2.0.3"
+  }
+}
