@@ -1,0 +1,3 @@
+
+# Ignores operating system specific files
+.DS_store
