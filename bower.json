@@ -2,7 +2,7 @@
   "name": "typescript-globalization-binding-handlers",
   "homepage": "https://github.com/lecode-official/typescript-globalization-binding-handlers",
   "authors": [
-    "David Neumann <david.neumann@live.com>",
+    "David Neumann <david.neumann@lecode.com>",
     "Lukas Rögner <lukas.roegner@icloud.com>"
   ],
   "description": "Knockout binding handlers for date and numerical objects of the globalization library written in TypeScript.",
