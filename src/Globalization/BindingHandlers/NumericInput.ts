@@ -101,6 +101,31 @@ knockout.bindingHandlers["numericInput"] = {
         // Adds a new binding to the element with a text input or a text binding to the interceptor
         if (element.tagName.toLowerCase() == "input") {
             knockout.applyBindingsToNode(element, { textInput: interceptor });
+
+            // Prevents input of invalid characters
+            jquery(element).keydown(e => {
+
+                // Allos backspace, delete, tab, escape, enter, comma and period
+                if (jquery.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 188, 190]) !== -1 ||
+                    // Allows Ctrl+A
+                    (e.keyCode == 65 && e.ctrlKey === true) ||
+                    // Allows Ctrl+C
+                    (e.keyCode == 67 && e.ctrlKey === true) ||
+                    // Allows Ctrl+X
+                    (e.keyCode == 88 && e.ctrlKey === true) ||
+                    // Allows home, end, left, right
+                    (e.keyCode >= 35 && e.keyCode <= 39) ||
+                    //Allows numbers and numbers + shift key
+                    ((e.shiftKey && (e.keyCode >= 48 && e.keyCode <= 57)) || (e.keyCode >= 96 && e.keyCode <= 105))) {
+                    // Returns as this input is valid
+                    return;
+                }
+
+                // Ensures that it is a number and stops the key down event
+                if ((!e.shiftKey && (e.keyCode < 48 || e.keyCode > 57)) || (e.shiftKey && (e.keyCode < 96 || e.keyCode > 105))) {
+                    e.preventDefault();
+                }
+            });
         } else {
             knockout.applyBindingsToNode(element, { text: interceptor });
         }
