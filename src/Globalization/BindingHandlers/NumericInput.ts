@@ -105,8 +105,8 @@ knockout.bindingHandlers["numericInput"] = {
             // Prevents input of invalid characters
             jquery(element).keydown(e => {
 
-                // Allos backspace, delete, tab, escape, enter, comma and period
-                if (jquery.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 188, 190]) !== -1 ||
+                // Allos backspace, delete, tab, escape, enter, comma, dash and period
+                if (jquery.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 188, 189, 190]) !== -1 ||
                     // Allows Ctrl+A
                     (e.keyCode == 65 && e.ctrlKey === true) ||
                     // Allows Ctrl+C
