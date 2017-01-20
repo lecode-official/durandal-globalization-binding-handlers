@@ -74,8 +74,8 @@ define(["require", "exports", "jquery", "Globalization/CultureInfo", "knockout",
                 knockout.applyBindingsToNode(element, { textInput: interceptor });
                 // Prevents input of invalid characters
                 jquery(element).keydown(function (e) {
-                    // Allos backspace, delete, tab, escape, enter, dash, period and slashes
-                    if (jquery.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 189, 190, 191, 220]) !== -1 ||
+                    // Allows backspace, delete, tab, escape, and enter
+                    if (jquery.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
                         // Allows Ctrl+A
                         (e.keyCode == 65 && e.ctrlKey === true) ||
                         // Allows Ctrl+C
@@ -83,16 +83,21 @@ define(["require", "exports", "jquery", "Globalization/CultureInfo", "knockout",
                         // Allows Ctrl+X
                         (e.keyCode == 88 && e.ctrlKey === true) ||
                         // Allows home, end, left, right
-                        (e.keyCode >= 35 && e.keyCode <= 39) ||
-                        //Allows numbers and numbers + shift key
-                        ((e.shiftKey && (e.keyCode >= 48 && e.keyCode <= 57)) || (e.keyCode >= 96 && e.keyCode <= 105))) {
+                        (e.keyCode >= 35 && e.keyCode <= 39)) {
                         // Returns as this input is valid
                         return;
                     }
-                    // Ensures that it is a number and stops the key down event
-                    if ((!e.shiftKey && (e.keyCode < 48 || e.keyCode > 57)) || (e.shiftKey && (e.keyCode < 96 || e.keyCode > 105))) {
-                        e.preventDefault();
+                    // Allows dash, period and slashes
+                    if ((jquery.inArray(e.keyCode, [110, 189, 190, 191, 220]) !== -1) ||
+                        //Allows numbers
+                        (!e.shiftKey && !e.ctrlKey && !e.altKey && (e.keyCode >= 48 && e.keyCode <= 57)) ||
+                        // Allows numpad numbers
+                        (e.keyCode >= 96 && e.keyCode <= 105)) {
+                        // Returns as this input is valid
+                        return;
                     }
+                    // Prevents the default input
+                    e.preventDefault();
                 });
             }
             else {
