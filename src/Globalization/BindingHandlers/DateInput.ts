@@ -26,7 +26,7 @@ knockout.bindingHandlers["dateInput"] = {
             read: () => {
                 
                 // Retrieves the options from the parameter of the date binding
-                var options: { value: KnockoutObservable<DateTime|null>; format: string|null; culture: CultureInfo|null } = <{ value: KnockoutObservable<DateTime|null>; culture: CultureInfo|null; format: string|null }>knockout.utils.unwrapObservable(valueAccessor());
+                var options: { value: KnockoutObservable<DateTime|null>; format: string|null; culture: CultureInfo|null; interpretAsUtc: boolean|null } = <{ value: KnockoutObservable<DateTime|null>; culture: CultureInfo|null; format: string|null; interpretAsUtc: boolean|null }>knockout.utils.unwrapObservable(valueAccessor());
 
                 // Gets the unwrapped value
                 var unwrappedValue = knockout.unwrap(options.value);
@@ -66,7 +66,7 @@ knockout.bindingHandlers["dateInput"] = {
                 jquery(element).data("updatedByInput", true);
 
                 // Retrieves the options from the parameter of the date binding
-                var options: { value: KnockoutObservable<DateTime|null>; format: string|null; culture: CultureInfo|null } = <{ value: KnockoutObservable<DateTime|null>; culture: CultureInfo|null; format: string|null }>knockout.utils.unwrapObservable(valueAccessor());
+                var options: { value: KnockoutObservable<DateTime|null>; format: string|null; culture: CultureInfo|null; interpretAsUtc: boolean|null } = <{ value: KnockoutObservable<DateTime|null>; culture: CultureInfo|null; format: string|null; interpretAsUtc: boolean|null }>knockout.utils.unwrapObservable(valueAccessor());
                 
                 // Checks if the value is empty
                 if (!newValue) {
@@ -76,7 +76,7 @@ knockout.bindingHandlers["dateInput"] = {
                     // Tries to parse the value
                     var newDateTime: DateTime|null = null;
                     try {
-                        newDateTime = !options.format ? DateTime.fromString(newValue) : DateTime.fromString(newValue, options.format, options.culture || CultureInfo.currentCulture);
+                        newDateTime = !options.format ? DateTime.fromString(newValue, undefined, undefined, !!options.interpretAsUtc) : DateTime.fromString(newValue, options.format, options.culture || CultureInfo.currentCulture, !!options.interpretAsUtc);
                     } catch (error) {
                     }
                     
