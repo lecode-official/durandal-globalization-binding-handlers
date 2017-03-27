@@ -60,7 +60,7 @@ define(["require", "exports", "jquery", "Globalization/CultureInfo", "knockout",
                         // Tries to parse the value
                         var newDateTime = null;
                         try {
-                            newDateTime = !options.format ? DateTime.fromString(newValue) : DateTime.fromString(newValue, options.format, options.culture || CultureInfo.currentCulture);
+                            newDateTime = !options.format ? DateTime.fromString(newValue, undefined, undefined, !!options.interpretAsUtc) : DateTime.fromString(newValue, options.format, options.culture || CultureInfo.currentCulture, !!options.interpretAsUtc);
                         }
                         catch (error) {
                         }
