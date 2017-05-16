@@ -2,7 +2,7 @@
   "name": "typescript-globalization-binding-handlers",
   "displayName": "TypeScript Globalization Binding Handlers",
   "private": true,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Knockout binding handlers for date and numerical objects of the globalization library written in TypeScript. It supports binding dates and numerics to text inputs based on different cultures.",
   "repository": {
     "type": "git",

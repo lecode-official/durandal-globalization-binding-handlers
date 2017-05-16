@@ -120,7 +120,7 @@ knockout.bindingHandlers["numericInput"] = {
                 }
 
                 // Allows comma, dash and period
-                if ((jquery.inArray(e.keyCode, [188, 189, 190]) !== -1) ||
+                if ((jquery.inArray(e.keyCode, [188, 189, 190, 109, 110]) !== -1) ||
                     //Allows numbers
                     (!e.shiftKey && !e.ctrlKey && !e.altKey && (e.keyCode >= 48 && e.keyCode <= 57)) || 
                     // Allows numpad numbers
