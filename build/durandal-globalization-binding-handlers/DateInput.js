@@ -1,6 +1,7 @@
 // #region Import Directives
-define(["require", "exports", "jquery", "Globalization/CultureInfo", "knockout", "Globalization/DateTime"], function (require, exports, jquery, CultureInfo, knockout, DateTime) {
+define(["require", "exports", "jquery", "durandal-globalization/CultureInfo", "knockout", "durandal-globalization/DateTime"], function (require, exports, jquery, CultureInfo, knockout, DateTime) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     // #endregion
     /**
      * Represents a binding handler for a text input that is used for a date.
@@ -83,16 +84,16 @@ define(["require", "exports", "jquery", "Globalization/CultureInfo", "knockout",
                         // Allows Ctrl+X
                         (e.keyCode == 88 && e.ctrlKey === true) ||
                         // Allows home, end, left, right
-                        (e.keyCode >= 35 && e.keyCode <= 39)) {
+                        (e.keyCode && e.keyCode >= 35 && e.keyCode <= 39)) {
                         // Returns as this input is valid
                         return;
                     }
                     // Allows dash, period and slashes
                     if ((jquery.inArray(e.keyCode, [110, 189, 190, 191, 220]) !== -1) ||
                         //Allows numbers
-                        (!e.shiftKey && !e.ctrlKey && !e.altKey && (e.keyCode >= 48 && e.keyCode <= 57)) ||
+                        (!e.shiftKey && !e.ctrlKey && !e.altKey && (e.keyCode && e.keyCode >= 48 && e.keyCode <= 57)) ||
                         // Allows numpad numbers
-                        (e.keyCode >= 96 && e.keyCode <= 105)) {
+                        (e.keyCode && e.keyCode >= 96 && e.keyCode <= 105)) {
                         // Returns as this input is valid
                         return;
                     }

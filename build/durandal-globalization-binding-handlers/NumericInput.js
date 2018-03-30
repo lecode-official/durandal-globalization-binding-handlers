@@ -1,6 +1,7 @@
 // #region Import Directives
-define(["require", "exports", "jquery", "Globalization/CultureInfo", "knockout", "Globalization/Numeric"], function (require, exports, jquery, CultureInfo, knockout, Numeric) {
+define(["require", "exports", "jquery", "durandal-globalization/CultureInfo", "knockout", "durandal-globalization/Numeric"], function (require, exports, jquery, CultureInfo, knockout, Numeric) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     // #endregion
     /**
      * Represents a binding handler for a text input that is used for a number.
@@ -94,16 +95,16 @@ define(["require", "exports", "jquery", "Globalization/CultureInfo", "knockout",
                         // Allows Ctrl+X
                         (e.keyCode == 88 && e.ctrlKey === true) ||
                         // Allows home, end, left, right
-                        (e.keyCode >= 35 && e.keyCode <= 39)) {
+                        (e.keyCode && e.keyCode >= 35 && e.keyCode <= 39)) {
                         // Returns as this input is valid
                         return;
                     }
                     // Allows comma, dash and period
                     if ((jquery.inArray(e.keyCode, [188, 189, 190, 109, 110]) !== -1) ||
                         //Allows numbers
-                        (!e.shiftKey && !e.ctrlKey && !e.altKey && (e.keyCode >= 48 && e.keyCode <= 57)) ||
+                        (!e.shiftKey && !e.ctrlKey && !e.altKey && (e.keyCode && e.keyCode >= 48 && e.keyCode <= 57)) ||
                         // Allows numpad numbers
-                        (e.keyCode >= 96 && e.keyCode <= 105)) {
+                        (e.keyCode && e.keyCode >= 96 && e.keyCode <= 105)) {
                         // Returns as this input is valid
                         return;
                     }
