@@ -1,32 +1,34 @@
 
 // #region Import Directives
 
+///<reference types="durandal-globalization" />
+
 import jquery = require("jquery");
-import CultureInfo = require("Globalization/CultureInfo");
+import CultureInfo = require("durandal-globalization/CultureInfo");
 import knockout = require("knockout");
-import DateTime = require("Globalization/DateTime");
+import Numeric = require("durandal-globalization/Numeric");
 
 // #endregion
 
 /**
- * Represents a binding handler for a text input that is used for a date.
+ * Represents a binding handler for a text input that is used for a number.
  */
-knockout.bindingHandlers["dateInput"] = {
+knockout.bindingHandlers["numericInput"] = {
 
     /**
-     * Initializes the interceptor for the date binding.
+     * Initializes the interceptor for the numeric binding.
      * @param {any} element The DOM element involved in this binding.
      * @param {() => any} valueAccessor A JavaScript function that you can call to get the current model property that is involved in this binding.
      * @param {KnockoutAllBindingsAccessor} allBindingsAccessor A JavaScript object that you can use to access all the model values bound to this DOM element.
      */
     init: (element: any, valueAccessor: () => any, allBindingsAccessor: KnockoutAllBindingsAccessor) => {
 
-        // Creates an interceptor which uses DateTime to format and unformat the number
+        // Creates an interceptor which uses Numeric to format and unformat the number
         var interceptor = knockout.computed({
             read: () => {
-                
-                // Retrieves the options from the parameter of the date binding
-                var options: { value: KnockoutObservable<DateTime|null>; format: string|null; culture: CultureInfo|null; interpretAsUtc: boolean|null } = <{ value: KnockoutObservable<DateTime|null>; culture: CultureInfo|null; format: string|null; interpretAsUtc: boolean|null }>knockout.utils.unwrapObservable(valueAccessor());
+
+                // Retrieves the options from the parameter of the date time binding
+                var options: { value: KnockoutObservable<Numeric|null>; format: string|null; culture: CultureInfo|null } = <{ value: KnockoutObservable<Numeric|null>; culture: CultureInfo|null; format: string|null }>knockout.utils.unwrapObservable(valueAccessor());
 
                 // Gets the unwrapped value
                 var unwrappedValue = knockout.unwrap(options.value);
@@ -47,7 +49,7 @@ knockout.bindingHandlers["dateInput"] = {
                 } 
 
                 // Gets the current value
-                var currentValue: string = element.tagName.toLowerCase() == "input" ? jquery(element).val() : jquery(element).text();
+                var currentValue: string = element.tagName.toLowerCase() == "input" ? <string>jquery(element).val() : jquery(element).text();
 
                 // Checks if the value is empty
                 if (!unwrappedValue && jquery(element).data("updatedByInput")) {
@@ -55,6 +57,18 @@ knockout.bindingHandlers["dateInput"] = {
                     return currentValue;
                 } else if (!unwrappedValue) {
                     return "";
+                }
+
+                // Tries to parse the value
+                var newNumeric: Numeric|null = null;
+                try {
+                    newNumeric = !options.format ? Numeric.fromString(currentValue) : Numeric.fromString(currentValue, options.culture || CultureInfo.currentCulture);
+                } catch (error) {
+                }
+                
+                // Checks if the current value of the text field is equal to the 
+                if (!!newNumeric && unwrappedValue.toNumber() == newNumeric.toNumber()) {
+                    return currentValue;
                 }
 
                 // Returns the new value
@@ -65,23 +79,23 @@ knockout.bindingHandlers["dateInput"] = {
                 // Indicates a change by the user
                 jquery(element).data("updatedByInput", true);
 
-                // Retrieves the options from the parameter of the date binding
-                var options: { value: KnockoutObservable<DateTime|null>; format: string|null; culture: CultureInfo|null; interpretAsUtc: boolean|null } = <{ value: KnockoutObservable<DateTime|null>; culture: CultureInfo|null; format: string|null; interpretAsUtc: boolean|null }>knockout.utils.unwrapObservable(valueAccessor());
-                
+                // Retrieves the options from the parameter of the number binding
+                var options: { value: KnockoutObservable<Numeric|null>; format: string|null; culture: CultureInfo|null } = <{ value: KnockoutObservable<Numeric|null>; culture: CultureInfo|null; format: string|null }>knockout.utils.unwrapObservable(valueAccessor());
+
                 // Checks if the value is empty
                 if (!newValue) {
                     options.value(null);
                 } else {
 
                     // Tries to parse the value
-                    var newDateTime: DateTime|null = null;
+                    var newNumeric: Numeric|null = null;
                     try {
-                        newDateTime = !options.format ? DateTime.fromString(newValue, undefined, undefined, !!options.interpretAsUtc) : DateTime.fromString(newValue, options.format, options.culture || CultureInfo.currentCulture, !!options.interpretAsUtc);
+                        newNumeric = !options.format ? Numeric.fromString(newValue) : Numeric.fromString(newValue, options.culture || CultureInfo.currentCulture);
                     } catch (error) {
                     }
                     
                     // Sets the new value
-                    options.value(newDateTime);
+                    options.value(newNumeric);
                 }
             }
         }).extend({ notify: "always" });
@@ -102,17 +116,17 @@ knockout.bindingHandlers["dateInput"] = {
                     // Allows Ctrl+X
                     (e.keyCode == 88 && e.ctrlKey === true) ||
                     // Allows home, end, left, right
-                    (e.keyCode >= 35 && e.keyCode <= 39)) {
+                    (e.keyCode && e.keyCode >= 35 && e.keyCode <= 39)) {
                     // Returns as this input is valid
                     return;
                 }
 
-                // Allows dash, period and slashes
-                if ((jquery.inArray(e.keyCode, [110, 189, 190, 191, 220]) !== -1) ||
+                // Allows comma, dash and period
+                if ((jquery.inArray(e.keyCode, [188, 189, 190, 109, 110]) !== -1) ||
                     //Allows numbers
-                    (!e.shiftKey && !e.ctrlKey && !e.altKey && (e.keyCode >= 48 && e.keyCode <= 57)) || 
+                    (!e.shiftKey && !e.ctrlKey && !e.altKey && (e.keyCode && e.keyCode >= 48 && e.keyCode <= 57)) || 
                     // Allows numpad numbers
-                    (e.keyCode >= 96 && e.keyCode <= 105)) {
+                    (e.keyCode && e.keyCode >= 96 && e.keyCode <= 105)) {
                     // Returns as this input is valid
                     return;
                 }
